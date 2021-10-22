@@ -1,0 +1,22 @@
+.container {
+  padding: 0 40px;
+  min-height: calc(100vh - 195px);
+  height: max-content;
+}
+
+h1,
+h2,
+h3 {
+  text-align: center;
+  font-family: 'Handlee', cursive;
+}
+
+h1 {
+  color: #c49877;
+  font-size: 2.8rem;
+}
+
+h2,
+h3 {
+  font-size: 1.8rem;
+}
