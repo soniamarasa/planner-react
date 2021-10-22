@@ -1,4 +1,4 @@
-import express from 'express'; //framework para node.js
+import express from 'express'; 
 import mongoose from 'mongoose';
 import cors from 'cors'; //-> Cors dribla a politica da mesma origem --> permite responder requisições de outro dominio
 import dotenv from 'dotenv';

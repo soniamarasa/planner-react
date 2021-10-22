@@ -103,7 +103,7 @@ const updateStatus = async (req, res) => {
       },
       itemClassUpdate,
       {
-        new: true, //->mostra o item depois de editar
+        new: true, // -> mostra o item depois de editar
       }
     );
 
