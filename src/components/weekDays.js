@@ -7,7 +7,7 @@ import getItems from '../services/service';
 function MainContainer() {
   return (
     <div className="boxes">
-      <Grid container spacing={2}>
+      <Grid className="teste" container spacing={2}>
         <Grid item xs={12} sm={4} md>
           <WeekDay day="Segunda" box="mon">
             {' '}
