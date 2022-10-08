@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Handlee&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Itim&display=swap');
+
+body {
+  margin: 0;
+  height: 100%;
+  font-family: 'Itim', cursive;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+li {
+  list-style-type: none;
+}
+
+ul {
+  padding-left: 20px;
+}
+
+.container {
+  min-height: calc(100vh - 7.8rem);
+  padding: 0.5rem 2.5rem;
+  box-sizing: border-box;
+}
+
+.card {
+  padding: 1.5rem;
+}
+
+.theme01 {
+  background-color: #f2ebe1;
+  .card {
+    background-color: #faf7f3 !important;
+    color: #ababab !important;
+  }
+  h2 {
+    color: #fddb51;
+  }
+  h1,
+  h3 {
+    color: #c49877;
+  }
+
+  footer {
+    background-color: #c49877;
+  }
+}
+
+.theme02 {
+  background-color: #262626;
+  & .card {
+    background-color: #3b3b3b !important;
+    color: #e3dac1 !important;
+  }
+  h2 {
+    color: #c7e6f5;
+  }
+  h1,
+  h3 {
+    color: #fbd1c1;
+  }
+
+  footer {
+    background-color: #fbd1c1;
+  }
+}
