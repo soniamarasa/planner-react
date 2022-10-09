@@ -1,7 +1,12 @@
 import axios from 'axios';
+import { getLocalStorage } from '../helpers/LocalStorage';
+
+const token = getLocalStorage('auth');
+
 
 export const api = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
+  headers: { Authorization: token.user.token   },
 });
 
 //USER
@@ -60,7 +65,7 @@ export const updateUser = (userId, user) => {
 };
 
 //ITEMS
-export const items = (userId) => {
+export const getItems = (userId) => {
   return api
     .get(`getItems/${userId}`)
     .then((response) => response)

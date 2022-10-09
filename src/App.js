@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.scss';
 
+
 import ProtectedRoute from './helpers/ProtectedRoute';
 import { Toast } from './helpers/Toast';
 

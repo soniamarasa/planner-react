@@ -1,0 +1,85 @@
+.img-container {
+  width: 100%;
+  position: relative;
+
+  & img {
+    width: inherit;
+  }
+
+  & h2 {
+    position: absolute;
+    top: calc(50% - 3rem);
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+    padding: 0 10%;
+    box-sizing: border-box;
+    text-shadow: 0px 0px 10px white;
+  }
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.MuiFormControl-root {
+  margin: 0px !important;
+  width: 100% !important;
+}
+
+.card {
+  height: calc(100% - 4rem);
+  padding: 0;
+  position: relative;
+
+  & h2 {
+    text-align: center;
+    margin: 0;
+  }
+
+  & .card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1.5rem;
+
+    Button {
+      width: max-content;
+    }
+
+    span {
+      text-align: center;
+    }
+  }
+
+  & .card-footer {
+    background-color: #c49877 !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #f2ebe1;
+    border-radius: 0 0 4px 4px;
+    padding: 1.5rem;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    box-sizing: border-box;
+
+    & Button {
+      background-color: #f2ebe1 !important;
+
+      color: #c49877 !important;
+
+      &:hover {
+        background-color: #e7ded1 !important;
+        border-color: #e7ded1 !important;
+      }
+    }
+  }
+}
+
+.card .card-footer {
+}

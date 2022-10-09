@@ -10,7 +10,7 @@ export const Header = () => {
         <p id="date">Hoje é dia 10, segunda. outubro 2022</p>
       </>
 
-      <i id="home" class="pi pi-home"></i>
+      <i id="home" className="pi pi-home"></i>
 
       <div id="actions"></div>
     </header>

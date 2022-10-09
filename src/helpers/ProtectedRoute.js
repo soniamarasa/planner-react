@@ -1,8 +1,9 @@
 import React from 'react'
 import { Navigate } from 'react-router-dom'
+import { getLocalStorage } from './LocalStorage';
 
 const ProtectedRoute = ({children}) => {
-  const auth = window.localStorage.getItem('auth')
+  const auth = getLocalStorage('auth')
   return auth ? children : <Navigate to='/auth' />
 }
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -8,67 +9,65 @@ import FormControl from '@mui/material/FormControl';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import IconButton from '@mui/material/IconButton';
-import Input from '@mui/material/Input';
-import FilledInput from '@mui/material/FilledInput';
+import { Button } from '@mui/material';
 import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
-import FormHelperText from '@mui/material/FormHelperText';
-import { login } from '../../services/api';
 
-const defaultValue = {
-  email: '',
-  password: '',
-};
+import './Auth.scss';
+import PlannerImg from '../../assets/weekly-planner.png';
+import Error from '../../helpers/Error';
+import useForm from '../../hooks/UseForm';
+import { login } from '../../services/api';
+import { setLocalStorage } from '../../helpers/LocalStorage';
 
 export const Auth = () => {
   const navigate = useNavigate();
 
-  const [values, setValues] = React.useState({
-    email: '',
-    password: '',
-    showPassword: false,
-  });
+  const email = useForm('email');
+  const password = useForm();
 
-  const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
-  };
+  const [showPassword, setShowPassword] = React.useState(false);
 
   const handleClickShowPassword = () => {
-    setValues({
-      ...values,
-      showPassword: !values.showPassword,
-    });
+    setShowPassword(!showPassword);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const payload = JSON.parse(JSON.stringify(values));
-    delete payload['showPassword'];
-    const response = await login(payload);
+    if (email.validate() && password.validate()) {
+      const response = await login({
+        email: email.value,
+        password: password.value,
+      });
 
-    if (response.status === 200) {
-      window.localStorage.setItem('auth', { ola: 'mundo' });
-      navigate('/');
+      if (response.status === 200) {
+        let auth = {
+          isAuthenticated: true,
+          user: response.data.user,
+        };
+
+        setLocalStorage('auth', auth);
+        setLocalStorage('idUser', auth.user.id);
+        navigate('/');
+      }
     }
-    console.log(response);
   };
 
   return (
-    <Box className="container">
-      <Grid container spacing={2} className="grid">
+    <Box className="container container-md">
+      <Grid container spacing={4} className="grid">
         <Grid
           item
           xs={12}
           sm={12}
-          md={6}
-          lg={8}
-          xl={8}
+          md={7}
+          lg={7}
+          xl={7}
           className="container-img"
         >
-          <div className="img">
-            <img src="../../../assets/weekly-planner.png" alt="" />
+          <div className="img-container">
+            <img src={PlannerImg} alt="" />
             <h2>Plan your entire life in one place.</h2>
           </div>
           <p>
@@ -81,64 +80,78 @@ export const Auth = () => {
           item
           xs={12}
           sm={12}
-          md={6}
-          lg={4}
-          xl={4}
+          md={5}
+          lg={5}
+          xl={5}
           className="container-login"
         >
-          <Card className='card'>
+          <Card className="card">
             <div className="card-body">
               <h2>Login</h2>
               <form onSubmit={handleSubmit}>
-                <div className="field">
+                <FormControl>
+                  <small>E-mail</small>
                   <TextField
+                    error
+                    required
                     id="outlined-email-input"
-                    label="email"
+                    fullWidth
                     type="email"
-                    onChange={handleChange('email')}
-                    autoComplete="current-email"
+                    size="small"
+                    value={email.value}
+                    onChange={email.onChange}
+                    onBlur={email.onBlur}
                   />
-                </div>
+                  {email.error && <Error error={email.error} />}
+                </FormControl>
 
-                <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
-                  <InputLabel htmlFor="outlined-adornment-password">
-                    Password
-                  </InputLabel>
+                <FormControl className="password" variant="outlined">
+                  <small> Password</small>
                   <OutlinedInput
+                    required
+                    size="small"
                     id="outlined-adornment-password"
-                    type={values.showPassword ? 'text' : 'password'}
-                    value={values.password}
-                    onChange={handleChange('password')}
+                    type={showPassword ? 'text' : 'password'}
                     endAdornment={
                       <InputAdornment position="end">
                         <IconButton
-                          aria-label="toggle password visibility"
                           onClick={handleClickShowPassword}
-                          // onMouseDown={handleMouseDownPassword}
                           edge="end"
                         >
-                          {values.showPassword ? (
-                            <VisibilityOff />
-                          ) : (
-                            <Visibility />
-                          )}
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
                         </IconButton>
                       </InputAdornment>
                     }
                     label="Password"
+                    value={password.value}
+                    onChange={password.onChange}
+                    onBlur={password.onBlur}
                   />
+                  {password.error && <Error error={password.error} />}
                 </FormControl>
-                <button type="submit" label="Sign in">
-                  Logar
-                </button>
+                <Button
+                  variant="contained"
+                  type="submit"
+                  label="Sign in"
+                  disabled={Boolean(
+                    email.error ||
+                      email.value.length === 0 ||
+                      password.error ||
+                      password.value.length === 0
+                  )}
+                >
+                  Sign In
+                </Button>
               </form>
 
               <span>Forgot password?</span>
             </div>
 
-            <div className="footer">
+            <div className="card-footer">
               <p>Don't have an account?</p>
-              <button>Sign up</button>
+              <Button size="small" variant="contained">
+                Sign up
+              </Button>
             </div>
           </Card>
         </Grid>

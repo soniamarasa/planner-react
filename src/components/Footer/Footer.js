@@ -6,7 +6,7 @@ export const Footer = () => {
     <footer>
       <span>
         By:{' '}
-        <a target="_blank" href="http://soniamarasa.github.io">
+        <a target="_blank" rel="noreferrer" href="http://soniamarasa.github.io">
           Sônia Mara de Sá
         </a>
       </span>
