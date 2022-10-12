@@ -1,10 +1,12 @@
-import React from 'react'
+import React from 'react';
+import { setLocalStorage, getLocalStorage } from './LocalStorage';
 
-export const Theme = (e) => {
+export const defaultTheme = 'theme-01';
 
-}
+export const setThemeStorage = (theme) => {
+  setLocalStorage('theme', theme);
+};
 
-export const removeLocalStorage = (key) => {
-    localStorage.removeItem(key);
-  };
-  
+export const getTheme = (key) => {
+  return getLocalStorage('theme');
+};

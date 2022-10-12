@@ -4,15 +4,15 @@ import Box from '@mui/material/Box';
 import { PlannerBody } from '../../components/PlannerBody/PlannerBody';
 import { CalendarCard } from '../../components/Cards/CalendarCard';
 import { Todo } from '../../components/Cards/Todo';
-import { getItems, userId  } from '../../services/api';
-import { getLocalStorage} from '../../helpers/LocalStorage';
+import { getItems, userId } from '../../services/api';
+import { getLocalStorage } from '../../helpers/LocalStorage';
 import 'react-calendar/dist/Calendar.css';
+import { ItemContext } from '../../ItemContext';
 
 export const Home = () => {
-  const [items, setItems] = useState([]);
-
+  const { items, setItems } = React.useContext(ItemContext);
   useEffect(() => {
-    getItems(userId).then((items) => {
+    getItems(getLocalStorage('userId')).then((items) => {
       setItems(
         items.data.sort((a, b) => {
           if (a.type && b.type)

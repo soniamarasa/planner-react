@@ -30,7 +30,7 @@ export const login = (data) => {
 
 export const logout = (userId) => {
   return api
-    .post('logout', { userId })
+    .post('logout', { id: userId })
     .then(() => {})
     .catch((err) => {
       console.log(err);

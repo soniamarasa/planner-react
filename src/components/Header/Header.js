@@ -4,11 +4,13 @@ import './Header.scss';
 import { IconButton } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import PlannerActions from '../PlannerActions/PlannerActions';
+import { getLocalStorage } from '../../helpers/LocalStorage';
+import { Today } from '../../helpers/Today';
 
 export const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
-
+  const todayIs = Today();
 
   return (
     <>
@@ -19,24 +21,32 @@ export const Header = () => {
         <header className="header">
           {location.pathname !== '/auth' && (
             <>
-              {' '}
               <PlannerActions />
             </>
           )}
           {(location.pathname === '/' || location.pathname === '/auth') && (
             <>
-              {' '}
-              <h1>Weekly Planner</h1> <h4 id="username">Hello, </h4>{' '}
+              <h1>Weekly Planner</h1>{' '}
+              {location.pathname === '/' && (
+                <h5 id="username">
+                  Hello, {getLocalStorage('auth').user.name.split(' ')[0]}{' '}
+                </h5>
+              )}
             </>
           )}
-          {location.pathname === '/' && (
-            <p id="date">Hoje é dia 10, segunda. outubro 2022</p>
-          )}
+          {location.pathname === '/' && <p id="date">{todayIs}</p>}
 
           {location.pathname === '/account' && (
-            <IconButton onClick={() => navigate('/')} aria-label="delete">
-              <HomeIcon />
-            </IconButton>
+            <div id="home">
+              {' '}
+              <IconButton
+                className="button-home"
+                onClick={() => navigate('/')}
+                aria-label="delete"
+              >
+                <HomeIcon />
+              </IconButton>{' '}
+            </div>
           )}
         </header>
       )}{' '}

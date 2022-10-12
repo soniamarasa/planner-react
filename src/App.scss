@@ -1,10 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Handlee&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Itim&display=swap');
 
-$primary-color: #ffa500;
-$secundary-color: #b995b9;
+$font-color: #483806;
+$primary-color: #eebd1e;
+$secundary-color: #d6a60b;
 $tertiary-color: #f52d55;
-$quaternary-color: #eebd1e;
+$quaternary-color: #b995b9;
 $quinary: #29b329;
 
 body {
@@ -26,12 +27,17 @@ h3 {
 }
 
 h4 {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
+}
+
+h5 {
+  font-size: 1rem;
 }
 
 h2,
 h3,
-h4 {
+h4,
+h5 {
   margin: 0;
   text-align: center;
 }
@@ -81,6 +87,7 @@ ul {
 
 .container {
   min-height: calc(100vh - 9.1rem);
+  height: max-content;
   max-width: 1980px;
   padding: 2rem;
   box-sizing: border-box;
@@ -136,12 +143,22 @@ ul {
 }
 
 Button {
-  background-color: #eec41e !important;
+  background-color: $primary-color !important;
   font-family: 'Itim', cursive !important;
   text-transform: capitalize !important;
+  color: $font-color !important;
 
   &:hover {
-    background-color: #ddb517 !important;
+    background-color: $secundary-color !important;
+  }
+}
+
+#home Button,
+button .button-home {
+  color: $primary-color !important;
+
+  &:hover {
+    color: $secundary-color !important;
   }
 }
 
@@ -176,14 +193,25 @@ form small {
   button:hover,
   button:focus-visible {
     background-color: transparent !important;
-    border: 2px solid $quaternary-color;
+    border: 2px solid $primary-color;
+  }
+
+  .MuiSpeedDial-actions {
+    button {
+      background-color: $primary-color !important;
+
+      &:hover {
+        border: 2px solid $secundary-color;
+        background-color: $secundary-color !important;
+      }
+    }
   }
 }
 
 .MuiSpeedDial-fab {
   box-shadow: 0px 0px 0px 0px transparent !important;
   background-color: transparent !important;
-  color: $quaternary-color !important;
+  color: $primary-color !important;
 }
 
 //Calendar Configs
@@ -250,12 +278,43 @@ form small {
 }
 
 .theme-02 {
+  background-color: #f9f9f9;
+  color: #3b3b3b !important;
+
+  .card,
+  .react-calendar__month-view__days__day,
+  footer,
+  .MuiPaper-root {
+    background-color: #ececec !important;
+    color: #000000 !important;
+  }
+
+  h1,
+  .react-calendar__month-view__weekdays,
+  .react-calendar__tile--active {
+    color: #8b9886 !important;
+  }
+
+  h2,
+  .react-calendar__navigation button,
+  #footer {
+    color: #338f8b !important;
+  }
+
+  h3,
+  #date {
+    color: #000000 !important;
+  }
+}
+
+.theme-03 {
   background-color: #262626;
   color: #e3dac1 !important;
 
   .card,
   .react-calendar__month-view__days__day,
-  footer {
+  footer,
+  .theme-dialog .MuiPaper-root {
     background-color: #3b3b3b !important;
     color: #e3dac1 !important;
   }
@@ -337,12 +396,15 @@ form small {
 }
 
 .theme-06 {
-  background-color: #221d0d;
-  color: #cd996a !important;
+  .container-root {
+    background-color: #221d0d;
+    color: #cd996a !important;
+  }
 
   .card,
   .react-calendar__month-view__days__day,
-  footer {
+  footer,
+  .MuiPaper-root {
     background-color: #45351d !important;
     color: #cd996a !important;
   }
@@ -362,5 +424,12 @@ form small {
   h3,
   #date {
     color: #b8866f !important;
+  }
+}
+
+.MuiPaper-root {
+  .MuiDialogTitle-root, .MuiDialogContent-root, .MuiDialogActions-root {
+    font-family: 'Itim', cursive !important;
+    padding: 1.5rem;
   }
 }

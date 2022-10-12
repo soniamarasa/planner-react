@@ -2,9 +2,10 @@ import * as React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import SpeedDial from '@mui/material/SpeedDial';
+import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
-
 import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
@@ -12,11 +13,42 @@ import PaletteIcon from '@mui/icons-material/Palette';
 import LogoutIcon from '@mui/icons-material/Logout';
 
 import { removeLocalStorage } from '../../helpers/LocalStorage';
-
 import { logout, userId } from '../../services/api';
+import { ThemeContext } from '../../ThemeContext';
+import { ThemeDialog } from '../Dialogs/ThemeDialog';
+import { ResetDialog } from '../Dialogs/ResetDialog';
+import { ChartDialog } from '../Dialogs/ChartDialog';
 
 export default function PlannerActions() {
   const navigate = useNavigate();
+  const [openTheme, setOpenTheme] = React.useState(false);
+  const [openReset, setOpenReset] = React.useState(false);
+  const [openChart, setOpenChart] = React.useState(false);
+  const { theme } = React.useContext(ThemeContext);
+
+  const handleClickOpenThemeDialog = () => {
+    setOpenTheme(true);
+  };
+
+  const handleCloseThemeDialog = () => {
+    setOpenTheme(false);
+  };
+
+  const handleClickOpenResetDialog = () => {
+    setOpenReset(true);
+  };
+
+  const handleCloseResetDialog = () => {
+    setOpenReset(false);
+  };
+
+  const handleClickOpenChartDialog = () => {
+    setOpenChart(true);
+  };
+
+  const handleCloseChartDialog = () => {
+    setOpenChart(false);
+  };
 
   const actions = [
     {
@@ -34,22 +66,18 @@ export default function PlannerActions() {
 
   function actionPlanner(type) {
     switch (type) {
+      case 'Statistics':
+        handleClickOpenChartDialog();
+        break;
+      case 'Theme':
+        handleClickOpenThemeDialog();
+        break;
       case 'Account':
         navigate('/account');
         break;
-
-      case 'Statistics':
-        return console.log('chart');
-        break;
-
       case 'Reset':
-        return console.log('reset');
+        handleClickOpenResetDialog();
         break;
-
-      case 'Theme':
-        return console.log('theme');
-        break;
-
       default:
         logout(userId).then(() => {
           removeLocalStorage('auth');
@@ -61,15 +89,16 @@ export default function PlannerActions() {
   }
 
   return (
-    <Box sx={{ transform: 'translateZ(0px)', flexGrow: 1 }}>
+    <Box  sx={{ transform: 'translateZ(0px)', flexGrow: 1 }}>
       <SpeedDial
-        ariaLabel="SpeedDial basic example"
+        ariaLabel="SpeedDial"
         sx={{ position: 'absolute', top: 10, right: 10 }}
-        icon={<MenuIcon />}
+        icon={<SpeedDialIcon icon={<MenuIcon />} openIcon={<CloseIcon />} />}
         direction="down"
       >
         {actions.map((action) => (
           <SpeedDialAction
+            className="btn-action"
             key={action.name}
             icon={action.icon}
             tooltipTitle={action.name}
@@ -80,6 +109,9 @@ export default function PlannerActions() {
           />
         ))}
       </SpeedDial>
+      <ThemeDialog  open={openTheme} onClose={handleCloseThemeDialog} />
+      <ResetDialog open={openReset} onClose={handleCloseResetDialog} />
+      <ChartDialog open={openChart} onClose={handleCloseChartDialog} />
     </Box>
   );
 }

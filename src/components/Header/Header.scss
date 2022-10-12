@@ -4,7 +4,7 @@ header {
 
 h1,
 #date {
-  margin: 0;  
+  margin: 0;
   text-align: center;
 }
 
@@ -12,17 +12,17 @@ h1 {
   padding: 1rem 0 0.5rem;
 }
 
-#home,
-h4 {
+h5 {
   position: absolute;
-  right: 70px;
-  top: 23px;
+  right: 4.5rem;
+  top: 1.6rem;
   cursor: pointer;
   margin: 0;
 }
 
-#home {
-  top: 21px;
+.button-home {
+  top: 1.5rem;
+  left: 1em;
   font-size: 1.5rem;
 }
 
@@ -31,11 +31,11 @@ i:hover {
 }
 
 @media (max-width: 768px) {
-  h4 {
+  h5 {
     display: none;
   }
 
-  #home {
+  .button-home {
     left: 1.5rem;
     right: unset;
   }

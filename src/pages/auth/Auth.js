@@ -49,6 +49,7 @@ export const Auth = () => {
 
         setLocalStorage('auth', auth);
         setLocalStorage('userId', auth.user.id);
+        
         navigate('/');
       }
     }
