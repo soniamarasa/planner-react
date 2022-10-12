@@ -1,7 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.scss';
 
-
 import ProtectedRoute from './helpers/ProtectedRoute';
 import { Toast } from './helpers/Toast';
 
@@ -18,8 +17,9 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <main className="theme01">
+        <main className="theme-02">
           <Header />
+
           <Routes>
             <Route path="/auth" element={<Auth />} />
             <Route path="/signup" element={<SignUp />} />

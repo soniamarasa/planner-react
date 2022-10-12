@@ -1,12 +1,12 @@
 import axios from 'axios';
 import { getLocalStorage } from '../helpers/LocalStorage';
 
-const token = getLocalStorage('auth');
-
+export const token = getLocalStorage('auth');
+export const userId = getLocalStorage('userId');
 
 export const api = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
-  headers: { Authorization: token.user.token   },
+  headers: token && { Authorization: token.user.token },
 });
 
 //USER
@@ -23,6 +23,15 @@ export const login = (data) => {
   return api
     .post('login', data)
     .then((response) => response)
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+export const logout = (userId) => {
+  return api
+    .post('logout', { userId })
+    .then(() => {})
     .catch((err) => {
       console.log(err);
     });

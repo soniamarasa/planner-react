@@ -48,7 +48,7 @@ export const Auth = () => {
         };
 
         setLocalStorage('auth', auth);
-        setLocalStorage('idUser', auth.user.id);
+        setLocalStorage('userId', auth.user.id);
         navigate('/');
       }
     }
@@ -85,7 +85,7 @@ export const Auth = () => {
           xl={5}
           className="container-login"
         >
-          <Card className="card">
+          <Card className="card card-auth">
             <div className="card-body">
               <h2>Login</h2>
               <form onSubmit={handleSubmit}>

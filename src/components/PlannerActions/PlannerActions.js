@@ -1,33 +1,82 @@
 import * as React from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import SpeedDial from '@mui/material/SpeedDial';
-import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
-import FileCopyIcon from '@mui/icons-material/FileCopyOutlined';
-import SaveIcon from '@mui/icons-material/Save';
-import PrintIcon from '@mui/icons-material/Print';
-import ShareIcon from '@mui/icons-material/Share';
 
-const actions = [
-  { icon: <FileCopyIcon />, name: 'Copy' },
-  { icon: <SaveIcon />, name: 'Save' },
-  { icon: <PrintIcon />, name: 'Print' },
-  { icon: <ShareIcon />, name: 'Share' },
-];
+import MenuIcon from '@mui/icons-material/Menu';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import BarChartIcon from '@mui/icons-material/BarChart';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import PaletteIcon from '@mui/icons-material/Palette';
+import LogoutIcon from '@mui/icons-material/Logout';
+
+import { removeLocalStorage } from '../../helpers/LocalStorage';
+
+import { logout, userId } from '../../services/api';
 
 export default function PlannerActions() {
+  const navigate = useNavigate();
+
+  const actions = [
+    {
+      icon: <ManageAccountsIcon />,
+      name: 'Account',
+    },
+    {
+      icon: <BarChartIcon />,
+      name: 'Statistics',
+    },
+    { icon: <RestartAltIcon />, name: 'Reset' },
+    { icon: <PaletteIcon />, name: 'Theme' },
+    { icon: <LogoutIcon />, name: 'Logout' },
+  ];
+
+  function actionPlanner(type) {
+    switch (type) {
+      case 'Account':
+        navigate('/account');
+        break;
+
+      case 'Statistics':
+        return console.log('chart');
+        break;
+
+      case 'Reset':
+        return console.log('reset');
+        break;
+
+      case 'Theme':
+        return console.log('theme');
+        break;
+
+      default:
+        logout(userId).then(() => {
+          removeLocalStorage('auth');
+          removeLocalStorage('userId');
+          navigate('/auth');
+        });
+        break;
+    }
+  }
+
   return (
-    <Box sx={{ height: 320, transform: 'translateZ(0px)', flexGrow: 1 }}>
+    <Box sx={{ transform: 'translateZ(0px)', flexGrow: 1 }}>
       <SpeedDial
         ariaLabel="SpeedDial basic example"
-        sx={{ position: 'absolute', bottom: 16, right: 16 }}
-        icon={<SpeedDialIcon />}
+        sx={{ position: 'absolute', top: 10, right: 10 }}
+        icon={<MenuIcon />}
+        direction="down"
       >
         {actions.map((action) => (
           <SpeedDialAction
             key={action.name}
             icon={action.icon}
             tooltipTitle={action.name}
+            onClick={(e) => {
+              e.preventDefault();
+              actionPlanner(action.name);
+            }}
           />
         ))}
       </SpeedDial>

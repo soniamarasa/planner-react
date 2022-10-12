@@ -2,22 +2,29 @@ import React, { useEffect, useState } from 'react';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import { PlannerBody } from '../../components/PlannerBody/PlannerBody';
-import { getItems } from '../../services/api';
-import { getLocalStorage } from '../../helpers/LocalStorage';
+import { CalendarCard } from '../../components/Cards/CalendarCard';
+import { Todo } from '../../components/Cards/Todo';
+import { getItems, userId  } from '../../services/api';
+import { getLocalStorage} from '../../helpers/LocalStorage';
+import 'react-calendar/dist/Calendar.css';
 
 export const Home = () => {
-  const [items, setItems] = useState();
-  const userId = getLocalStorage('idUser');
+  const [items, setItems] = useState([]);
 
   useEffect(() => {
     getItems(userId).then((items) => {
-      console.log(items.data);
+      setItems(
+        items.data.sort((a, b) => {
+          if (a.type && b.type)
+            return a.type < b.type ? -1 : a.type > b.type ? 1 : 0;
+        })
+      );
     });
   }, []);
 
   return (
-    <Box className="container container-md">
-      <Grid container spacing={2} className="grid">
+    <Box className="container">
+      <Grid container spacing={2} columnSpacing={2} className="grid">
         <Grid
           item
           xs={12}
@@ -27,7 +34,7 @@ export const Home = () => {
           xl={9}
           className="container-img"
         >
-          <PlannerBody />
+          <PlannerBody items={items} />
         </Grid>
 
         <Grid
@@ -37,8 +44,12 @@ export const Home = () => {
           md={4}
           lg={3}
           xl={3}
-          className="container-login"
-        ></Grid>
+          className="container-planner container-col-2"
+        >
+          {' '}
+          <CalendarCard />
+          <Todo items={items} />
+        </Grid>
       </Grid>
     </Box>
   );

@@ -1,6 +1,11 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '@mui/material';
+import './NotFound.scss';
 
 export const NotFound = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="container-not-found">
       <div className="container-div">
@@ -162,13 +167,11 @@ export const NotFound = () => {
         <p>You may have mistyped the address or the page may have moved.</p>
 
         <div className="back">
-          <button mat-flat-button color="primary">
-            <i className="fa-solid fa-arrow-left"></i> BACK
-          </button>
+          <Button onClick={() => navigate(-1)}>BACK</Button>
         </div>
 
         <div className="logo">
-          <h3>Weekly Planner</h3>
+          <h3 onClick={() => navigate('/')}>Weekly Planner</h3>
         </div>
       </div>
     </div>

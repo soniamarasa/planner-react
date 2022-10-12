@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Card from '@mui/material/Card';
 
+import { Item } from './Item';
 
 export const Day = (props) => {
-console.log(props)
-
   return (
-    <Card className="day-card">
+    <Card className="card day">
       <h2>{props.day}</h2>
       <ul>
         {props.items?.map((item) => (
-          <li key={item._id}>{item.description}</li>
+          <Item key={item._id} item={item} />
         ))}
       </ul>
     </Card>
