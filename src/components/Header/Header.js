@@ -29,7 +29,7 @@ export const Header = () => {
               <h1>Weekly Planner</h1>{' '}
               {location.pathname === '/' && (
                 <h5 id="username">
-                  Hello, {getLocalStorage('auth').user.name.split(' ')[0]}{' '}
+                  Hello, {getLocalStorage('auth')?.user.name.split(' ')[0]}{' '}
                 </h5>
               )}
             </>

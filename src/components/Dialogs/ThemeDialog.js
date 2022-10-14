@@ -33,7 +33,7 @@ export const ThemeDialog = (props) => {
   };
 
   return (
-    <Dialog className="theme-06" onClose={handleClose} open={open}>
+    <Dialog className={theme} onClose={handleClose} open={open}>
       <DialogTitle>Choose a theme</DialogTitle>
 
       <DialogContent>

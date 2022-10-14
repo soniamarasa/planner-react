@@ -1,5 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import './Auth.scss';
+import PlannerImg from '../../assets/weekly-planner.png';
 
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -9,24 +11,31 @@ import FormControl from '@mui/material/FormControl';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import IconButton from '@mui/material/IconButton';
-import { Button } from '@mui/material';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputAdornment from '@mui/material/InputAdornment';
-
-import './Auth.scss';
-import PlannerImg from '../../assets/weekly-planner.png';
+import { Button } from '@mui/material';
+import { setLocalStorage } from '../../helpers/LocalStorage';
+import { login } from '../../services/api';
 import Error from '../../helpers/Error';
 import useForm from '../../hooks/UseForm';
-import { login } from '../../services/api';
-import { setLocalStorage } from '../../helpers/LocalStorage';
+
+import { RecoverPassDialog } from '../../components/Dialogs/RecoverPassDialog';
 
 export const Auth = () => {
   const navigate = useNavigate();
-
   const email = useForm('email');
   const password = useForm();
 
   const [showPassword, setShowPassword] = React.useState(false);
+  const [openRecoverPass, setOpenRecoverPass] = React.useState(false);
+
+  const handleClickOpenRecoverDialog = () => {
+    setOpenRecoverPass(true);
+  };
+
+  const handleCloseRecoverDialog = () => {
+    setOpenRecoverPass(false);
+  };
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -49,8 +58,10 @@ export const Auth = () => {
 
         setLocalStorage('auth', auth);
         setLocalStorage('userId', auth.user.id);
-        
-        navigate('/');
+
+        setTimeout(() => {
+          navigate('/');
+        }, 1000);
       }
     }
   };
@@ -145,7 +156,9 @@ export const Auth = () => {
                 </Button>
               </form>
 
-              <span>Forgot password?</span>
+              <span onClick={() => handleClickOpenRecoverDialog()}>
+                Forgot password?
+              </span>
             </div>
 
             <div className="card-footer">
@@ -157,6 +170,10 @@ export const Auth = () => {
           </Card>
         </Grid>
       </Grid>
+      <RecoverPassDialog
+        open={openRecoverPass}
+        onClose={handleCloseRecoverDialog}
+      />
     </Box>
   );
 };

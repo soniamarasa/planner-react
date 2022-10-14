@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect} from 'react';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import { PlannerBody } from '../../components/PlannerBody/PlannerBody';
 import { CalendarCard } from '../../components/Cards/CalendarCard';
 import { Todo } from '../../components/Cards/Todo';
-import { getItems, userId } from '../../services/api';
+import { getItems} from '../../services/api';
 import { getLocalStorage } from '../../helpers/LocalStorage';
 import 'react-calendar/dist/Calendar.css';
 import { ItemContext } from '../../ItemContext';

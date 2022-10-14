@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
@@ -14,7 +14,6 @@ import LogoutIcon from '@mui/icons-material/Logout';
 
 import { removeLocalStorage } from '../../helpers/LocalStorage';
 import { logout, userId } from '../../services/api';
-import { ThemeContext } from '../../ThemeContext';
 import { ThemeDialog } from '../Dialogs/ThemeDialog';
 import { ResetDialog } from '../Dialogs/ResetDialog';
 import { ChartDialog } from '../Dialogs/ChartDialog';
@@ -24,7 +23,6 @@ export default function PlannerActions() {
   const [openTheme, setOpenTheme] = React.useState(false);
   const [openReset, setOpenReset] = React.useState(false);
   const [openChart, setOpenChart] = React.useState(false);
-  const { theme } = React.useContext(ThemeContext);
 
   const handleClickOpenThemeDialog = () => {
     setOpenTheme(true);
@@ -109,7 +107,7 @@ export default function PlannerActions() {
           />
         ))}
       </SpeedDial>
-      <ThemeDialog  open={openTheme} onClose={handleCloseThemeDialog} />
+      <ThemeDialog open={openTheme} onClose={handleCloseThemeDialog} />
       <ResetDialog open={openReset} onClose={handleCloseResetDialog} />
       <ChartDialog open={openChart} onClose={handleCloseChartDialog} />
     </Box>
