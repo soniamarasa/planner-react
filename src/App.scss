@@ -98,6 +98,11 @@ ul {
   max-width: 1000px;
 }
 
+
+.container-sm {
+  max-width: 800px;
+}
+
 .container-planner {
   display: grid;
   gap: 1rem;
@@ -234,20 +239,20 @@ button .button-home {
     background-color: transparent !important;
 
     &:hover {
-      background-color: rgba(255, 255, 255, 0.05) !important;
+      background-color: rgba(255, 255, 255, 0.08) !important;
     }
   }
 
   .MuiInputBase-formControl,
   .MuiInputBase-input-Mui,
   .OutlinedInput-input {
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: rgba(255, 255, 255, 0.08);
     color: #fff;
   }
 
   .MuiOutlinedInput-root {
     & fieldset {
-      border-color: rgba(255, 255, 255, 0.01) !important;
+      border-color: rgba(255, 255, 255, 0.00) !important;
     }
   }
 }
@@ -514,5 +519,19 @@ form small {
   h3,
   #date {
     color: #b8866f !important;
+  }
+}
+
+.user-img { 
+  background-color: $primary-color;
+
+  svg {
+
+      width: inherit;
+      height: inherit;
+      padding: 1.5rem;
+      box-sizing: border-box;
+      color: #fff;
+
   }
 }
