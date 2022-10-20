@@ -157,14 +157,14 @@ export const Auth = () => {
                 </Button>
               </form>
 
-              <span onClick={() => handleClickOpenRecoverDialog()}>
-                Forgot password?
-              </span>
+              <p >
+               <span onClick={() => handleClickOpenRecoverDialog()}> Forgot password?  </span> 
+              </p>
             </div>
 
             <div className="card-footer">
               <p>Don't have an account?</p>
-              <Button size="small" variant="contained">
+              <Button onClick={() => navigate('/signup')} size="small" variant="contained">
                 Sign up
               </Button>
             </div>

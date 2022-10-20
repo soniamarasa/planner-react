@@ -23,7 +23,7 @@ export const Container = () => {
         <Routes>
           <Route path="/auth" element={<Auth />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/password" element={<Password />} />
+          <Route path="/password-reset/:token" element={<Password />} />
           <Route path="*" element={<NotFound />} />
           <Route
             path="/"

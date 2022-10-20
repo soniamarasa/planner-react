@@ -40,7 +40,8 @@ export const Password = () => {
       password.error ||
       password.value.length === 0 ||
       confirmPassword.error ||
-      confirmPassword.value.length === 0
+      confirmPassword.value.length === 0 ||
+      confirmPassword.value !== password.value
     )
       disabled = true;
     else disabled = false;
@@ -54,17 +55,15 @@ export const Password = () => {
       password: password.value,
     };
 
-    console.log(data);
+    if (password.validate()) {
+      const response = await resetPassword(data);
 
-    // if (email.validate() && password.validate()) {
-    //   const response = await resetPassword(data);
-
-    //   if (response.status === 200) {
-    //     setTimeout(() => {
-    //       navigate('/auth');
-    //     }, 1000);
-    //   }
-    // }
+      if (response.status === 200) {
+        setTimeout(() => {
+          navigate('/auth');
+        }, 1000);
+      }
+    }
   };
 
   return (
@@ -74,7 +73,7 @@ export const Password = () => {
       <Card className="card">
         <form onSubmit={handleSubmit}>
           <Grid container spacing={2}>
-            <Grid item xs={12} >
+            <Grid item xs={12}>
               <FormControl fullWidth>
                 <small> Password</small>
                 <OutlinedInput
@@ -99,7 +98,7 @@ export const Password = () => {
               </FormControl>
             </Grid>
 
-            <Grid item xs={12} >
+            <Grid item xs={12}>
               <FormControl fullWidth>
                 <small> Confirm password</small>
                 <OutlinedInput
@@ -127,7 +126,7 @@ export const Password = () => {
                   onBlur={confirmPassword.onBlur}
                 />
 
-                {confirmPassword.value.length > 0 &&
+                {confirmPassword.value.length > 4 &&
                   password.value !== confirmPassword.value && (
                     <Error error="Passwords don't match" />
                   )}

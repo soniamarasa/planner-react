@@ -1,7 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Box } from '@mui/material';
-import { Grid } from '@mui/material';
+
 import Card from '@mui/material/Card';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
@@ -11,10 +9,11 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import TextField from '@mui/material/TextField';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import IconButton from '@mui/material/IconButton';
-import { Button } from '@mui/material';
-import { UserImg } from '../../components/UserImg/UserImg';
 import InputAdornment from '@mui/material/InputAdornment';
 import Stack from '@mui/material/Stack';
+import { Box } from '@mui/material';
+import { Grid } from '@mui/material';
+import { Button } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
@@ -22,20 +21,21 @@ import dayjs from 'dayjs';
 
 import Error from '../../helpers/Error';
 import useForm from '../../hooks/UseForm';
-import { updateUser } from '../../services/api';
+import { getUser, updateUser } from '../../services/api';
+import { UserImg } from '../../components/UserImg/UserImg';
+
 import './Account.scss';
 
 export const Account = () => {
-  const navigate = useNavigate();
   const name = useForm();
   const gender = useForm();
   const email = useForm('email');
-  const currentPassword = useForm();
+  const oldPassword = useForm();
   const password = useForm('password');
   const confirmPassword = useForm();
 
-  const [birthdate, setBirthdate] = React.useState(dayjs(''));
-  const [showCurrentPassword, setCurrentPassword] = React.useState(false);
+  const [birthdate, setBirthdate] = React.useState(dayjs('').format());
+  const [showoldPassword, setoldPassword] = React.useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
 
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
@@ -49,8 +49,8 @@ export const Account = () => {
     setBirthdate(dateValue);
   };
 
-  const handleClickShowCurrentPassword = () => {
-    setCurrentPassword(!showCurrentPassword);
+  const handleClickShowoldPassword = () => {
+    setoldPassword(!showoldPassword);
   };
 
   const handleClickShowPassword = () => {
@@ -61,20 +61,39 @@ export const Account = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
 
+  const showButton = () => {
+    if (name.changed || email.changed || birthdate.changed || gender.changed)
+      return true;
+    else return false;
+  };
+
   const disabledButton = () => {
     let disabled = false;
 
     if (
       name.error ||
-      name.value.length === 0 ||
+      name.value?.length === 0 ||
       gender.value === '0' ||
-      birthdate.length === 0 ||
+      birthdate?.length === 0 ||
       email.error ||
-      email.value.length === 0 ||
+      email.value?.length === 0
+    )
+      disabled = true;
+    else disabled = false;
+    return disabled;
+  };
+
+  const disabledButtonPass = () => {
+    let disabled = false;
+
+    if (
       password.error ||
-      password.value.length === 0 ||
-      currentPassword.error ||
-      currentPassword.value.length === 0
+      password.value?.length === 0 ||
+      oldPassword.error ||
+      oldPassword?.value.length === 0 ||
+      confirmPassword.error ||
+      confirmPassword?.value.length === 0 ||
+      password?.value !== confirmPassword?.value
     )
       disabled = true;
     else disabled = false;
@@ -87,43 +106,47 @@ export const Account = () => {
     const data = {
       name: name.value,
       gender: gender.value,
-      birthdate: birthdate.format(),
+      birthdate: birthdate,
       email: email.value,
     };
 
-    console.log(data);
+    if (email.validate()) {
+      const response = await updateUser(data);
 
-    // if (email.validate()) {
-    //   const response = await updateUser(data);
-
-    //   if (response.status === 200) {
-    //     setTimeout(() => {
-    //       navigate('/auth');
-    //     }, 1000);
-    //   }
-    // }
+      if (response.status === 200) {
+      }
+    }
   };
 
   const handleSubmitPassword = async (e) => {
     e.preventDefault();
 
     const data = {
+      name: name.value,
+      gender: gender.value,
+      birthdate: birthdate,
+      email: email.value,
+      oldPassword: oldPassword.value,
       password: password.value,
-      currentPassword: password.value,
+      confirmPassword: confirmPassword.value,
     };
 
-    console.log(data);
+    if (oldPassword.validate() && password.validate()) {
+      const response = await updateUser(data);
 
-    // if (currentPassword.validate() && password.validate()) {
-    //   const response = await updateUser(data);
-
-    //   if (response.status === 200) {
-    //     setTimeout(() => {
-    //       navigate('/auth');
-    //     }, 1000);
-    //   }
-    // }
+      if (response.status === 200) {
+      }
+    }
   };
+
+  React.useEffect(() => {
+    getUser().then(({ data }) => {
+      name.setValue(data.name);
+      gender.setValue(data.gender);
+      email.setValue(data.email);
+      setBirthdate(data.birthdate);
+    });
+  }, []);
 
   return (
     <div className="container account container-md">
@@ -161,6 +184,7 @@ export const Account = () => {
                       <small>E-mail</small>
                       <TextField
                         error
+                        disabled
                         required
                         fullWidth
                         type="email"
@@ -177,7 +201,6 @@ export const Account = () => {
                     <FormControl fullWidth>
                       <small>Gender</small>
                       <Select
-                        labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         value={gender.value || '0'}
                         onChange={gender.onChange}
@@ -216,13 +239,15 @@ export const Account = () => {
                   </Grid>
 
                   <Grid className="buttons" item xs={12} sm={4} md={4}>
-                    <Button
-                      variant="contained"
-                      type="submit"
-                      disabled={disabledButton()}
-                    >
-                      Save
-                    </Button>
+                    {showButton() && (
+                      <Button
+                        variant="contained"
+                        type="submit"
+                        disabled={disabledButton()}
+                      >
+                        Save
+                      </Button>
+                    )}
                   </Grid>
                 </Grid>
               </form>
@@ -237,15 +262,14 @@ export const Account = () => {
                       <OutlinedInput
                         required
                         size="small"
-                        id="outlined-adornment-password"
-                        type={showCurrentPassword ? 'text' : 'password'}
+                        type={showoldPassword ? 'text' : 'password'}
                         endAdornment={
                           <InputAdornment position="end">
                             <IconButton
-                              onClick={handleClickShowCurrentPassword}
+                              onClick={handleClickShowoldPassword}
                               edge="end"
                             >
-                              {showCurrentPassword ? (
+                              {showoldPassword ? (
                                 <VisibilityOff />
                               ) : (
                                 <Visibility />
@@ -254,24 +278,21 @@ export const Account = () => {
                           </InputAdornment>
                         }
                         label="Password"
-                        value={currentPassword.value}
-                        onChange={currentPassword.onChange}
-                        onBlur={currentPassword.onBlur}
+                        value={oldPassword.value}
+                        onChange={oldPassword.onChange}
+                        onBlur={oldPassword.onBlur}
                       />
 
-                      {currentPassword.error && (
-                        <Error error={currentPassword.error} />
-                      )}
+                      {oldPassword.error && <Error error={oldPassword.error} />}
                     </FormControl>
                   </Grid>
 
                   <Grid item xs={12} sm={6} md={6}>
                     <FormControl fullWidth>
-                      <small> Password</small>
+                      <small> New password</small>
                       <OutlinedInput
                         required
                         size="small"
-                        id="outlined-adornment-password"
                         type={showPassword ? 'text' : 'password'}
                         endAdornment={
                           <InputAdornment position="end">
@@ -336,20 +357,22 @@ export const Account = () => {
                   </Grid>
 
                   <Grid className="buttons" item xs={12} sm={6} md={6}>
-                    <Button
-                      variant="contained"
-                      type="submit"
-                      disabled={disabledButton()}
-                    >
-                      Change Password
-                    </Button>
+                    {oldPassword.value.length > 0 && password.value.length > 0 && (
+                      <Button
+                        variant="contained"
+                        type="submit"
+                        disabled={disabledButtonPass()}
+                      >
+                        Change Password
+                      </Button>
+                    )}
                   </Grid>
                 </Grid>
               </form>
             </Card>
-            <div className=" reset buttons">
+            {/* <div className=" reset buttons">
               <Button variant="contained">Reset</Button>
-            </div>
+            </div> */}
           </Grid>
         </Grid>
       </Box>{' '}

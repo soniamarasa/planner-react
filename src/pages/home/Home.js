@@ -31,7 +31,7 @@ export const Home = () => {
         items.data.sort((a, b) => {
           if (a.type && b.type)
             return a.type < b.type ? -1 : a.type > b.type ? 1 : 0;
-            else return null
+          else return null;
         })
       );
     });

@@ -7,9 +7,9 @@ const types = {
     message: 'Enter a valid email address.',
   },
   password: {
-    regex: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/,
+    regex: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#])[0-9a-zA-Z$*&@#]{8,}$/,
     message:
-      'The password must have 1 uppercase character, 1 lowercase character and 1 number. With at least 8 characters.',
+      'The password must contain: 1 uppercase character, 1 lowercase character, 1 number and 1 special character. With at least 8 characters.',
   },
   number: {
     regex: /^\d+$/,
@@ -19,10 +19,10 @@ const types = {
 
 const useForm = (type) => {
   const [value, setValue] = React.useState('');
+  const [changed, setChanged] = React.useState(false);
   const [error, setError] = React.useState(null);
 
   function validate(value) {
- 
     if (type === false) return true;
     if (value.length === 0) {
       setError('Required field.');
@@ -39,11 +39,13 @@ const useForm = (type) => {
   function onChange({ target }) {
     if (error) validate(target.value);
     setValue(target.value);
+    setChanged(true)
   }
 
   return {
     value,
     setValue,
+    changed,
     onChange,
     error,
     validate: () => validate(value),

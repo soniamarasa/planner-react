@@ -1,7 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Box } from '@mui/material';
-import { Grid } from '@mui/material';
 import Card from '@mui/material/Card';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
@@ -11,11 +8,13 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import TextField from '@mui/material/TextField';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import Stack from '@mui/material/Stack';
+import { useNavigate } from 'react-router-dom';
+import { Box } from '@mui/material';
+import { Grid } from '@mui/material';
 import { Button } from '@mui/material';
 import { UserImg } from '../../components/UserImg/UserImg';
-import InputAdornment from '@mui/material/InputAdornment';
-
-import Stack from '@mui/material/Stack';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
@@ -89,17 +88,15 @@ export const SignUp = () => {
       password: password.value,
     };
 
-    console.log(data);
+    if (email.validate() && password.validate()) {
+      const response = await createAccount(data);
 
-    // if (email.validate() && password.validate()) {
-    //   const response = await createAccount(data);
-
-    //   if (response.status === 200) {
-    //     setTimeout(() => {
-    //       navigate('/auth');
-    //     }, 1000);
-    //   }
-    // }
+      if (response.status === 200) {
+        setTimeout(() => {
+          navigate('/auth');
+        }, 1000);
+      }
+    }
   };
 
   return (

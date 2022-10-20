@@ -28,10 +28,14 @@ export const Item = ({ item }) => {
 
   return (
     <>
-      <li onClick={handleClick} className={'item-list' + ' ' + status(item)} key={item._id}>
+      <li
+        onClick={handleClick}
+        className={'item-list' + ' ' + status(item)}
+        key={item._id}
+      >
         <span>
           {' '}
-          {item.type === 'appointment' && item.finished && <EventIcon />}
+          {item.type === 'appointment' && <EventIcon />}
           {item.type === 'event' && <CircleIcon />}
           {item.type === 'note' && <RemoveIcon />}
           {item.type === 'task' && !item.finished && (

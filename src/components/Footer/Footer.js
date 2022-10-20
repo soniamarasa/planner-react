@@ -4,11 +4,13 @@ import './Footer.scss';
 
 export const Footer = () => {
   const location = useLocation();
-  const rotes = ['/auth', '/', '/password', '/signup', '/account'];
+  const rotes = ['/auth', '/', '/signup', '/account'];
+  const passwordReset = '/password-reset';
 
   return (
     <>
-      {rotes.includes(location.pathname) && (
+      {(rotes.includes(location.pathname) ||
+        location.pathname.includes(passwordReset)) && (
         <footer>
           <span>
             By:{' '}

@@ -150,13 +150,13 @@ ul {
   color: $tertiary-color;
 }
 
-Button:not(.Toastify__close-button, .Toastify__close-button--light) {
+.MuiButton-root {
   background-color: $primary-color !important;
   font-family: 'Itim', cursive !important;
   text-transform: capitalize !important;
   color: $font-color !important;
 
-  &:hover(.Toastify__close-button, .Toastify__close-button--light) {
+  &:hover {
     background-color: $secundary-color !important;
   }
 
@@ -179,15 +179,15 @@ button .button-home {
   padding: 6px !important;
   background-color: transparent !important;
 
-  &:hover:not(.add-item .MuiIconButton-root ) {
+  &:hover:not(.add-item .MuiIconButton-root) {
     background-color: rgba(0, 0, 0, 0.05) !important;
   }
 }
 
 .add-item {
   .MuiIconButton-root {
-  
-    &:hover:not(.add-item .MuiIconButton-root ) {
+    background-color: $primary-color !important;
+    &:hover:not(.add-item .MuiIconButton-root) {
       background-color: $secundary-color !important;
     }
   }
@@ -247,6 +247,15 @@ button .button-home {
 .theme-06 {
   .MuiDialogContentText-root {
     color: #fff;
+  }
+
+  .add-item {
+    .MuiIconButton-root {
+      background-color: $primary-color !important;
+      &:hover:not(.add-item .MuiIconButton-root) {
+        background-color: $secundary-color !important;
+      }
+    }
   }
 
   .MuiIconButton-root {
@@ -312,11 +321,12 @@ form small {
 .react-calendar {
   border: none !important;
   background: transparent !important;
-  font-family: inherit !important;
+  font-family: 'Itim', cursive !important;
   width: 100% !important;
 
   button {
     background-color: transparent !important;
+    font-family: 'Itim', cursive !important;
     font-size: 1rem !important;
   }
 
@@ -355,6 +365,7 @@ form small {
   }
   .card,
   .react-calendar__month-view__days__day,
+  .react-calendar__century-view__decades__decade,
   footer,
   .MuiPaper-root,
   .MuiDialogContentText-root {
@@ -383,6 +394,7 @@ form small {
   }
   .card,
   .react-calendar__month-view__days__day,
+  .react-calendar__century-view__decades__decade,
   footer,
   .MuiPaper-root {
     background-color: #ececec !important;
@@ -416,6 +428,7 @@ form small {
   }
   .card,
   .react-calendar__month-view__days__day,
+  .react-calendar__century-view__decades__decade,
   footer,
   .MuiPaper-root {
     background-color: #3b3b3b !important;
@@ -447,8 +460,10 @@ form small {
     background-color: #212529;
     color: #d4be8a !important;
   }
+
   .card,
   .react-calendar__month-view__days__day,
+  .react-calendar__century-view__decades__decade,
   footer,
   .MuiPaper-root {
     background-color: #312f2e !important;
@@ -457,8 +472,7 @@ form small {
 
   h2,
   .react-calendar__navigation button,
-  #footer,
-  .MuiPaper-root {
+  #footer {
     color: #5c997c !important;
   }
 
@@ -484,6 +498,7 @@ form small {
 
   .card,
   .react-calendar__month-view__days__day,
+  .react-calendar__century-view__decades__decade,
   footer,
   .MuiPaper-root {
     background-color: #22232e !important;
@@ -518,6 +533,7 @@ form small {
 
   .card,
   .react-calendar__month-view__days__day,
+  .react-calendar__century-view__decades__decade,
   footer,
   .MuiPaper-root {
     background-color: #45351d !important;

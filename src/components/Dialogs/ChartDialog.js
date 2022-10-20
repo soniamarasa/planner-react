@@ -11,17 +11,19 @@ import { ThemeContext } from '../../ThemeContext';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-let started = 0;
-let finished = 0;
-let important = 0;
-let canceled = 0;
-let notStarted = 0;
-let total = 0;
-let dataTasks = [];
 
 export const ChartDialog = (props) => {
   const { theme} = React.useContext(ThemeContext);
   const { onClose, open } = props;
+
+  const [started, setStarted] = React.useState(0);
+  const [finished, setFinished] = React.useState(0);
+  const [important, setImportant] = React.useState(0);
+  const [canceled, setCanceled] = React.useState(0);
+  const [notStarted, setNotStarted] = React.useState(0);
+  const [total, setTotal] = React.useState(0);
+  const [dataTasks, setDataTasks] = React.useState([]);
+  const [showGraph, setShowGraph] = React.useState(false)
 
   const chartOptions = {
     responsive: true,
@@ -35,12 +37,12 @@ export const ChartDialog = (props) => {
     },
   };
 
-  const data = {
+  let data = {
     labels: ['Not started', 'Started', 'Important', 'Finished', 'Canceled'],
     datasets: [
       {
         label: 'Statistics',
-        data: dataTasks,
+        data: [],
         backgroundColor: [
           '#eebd1e',
           '#b995b9',
@@ -58,10 +60,15 @@ export const ChartDialog = (props) => {
         borderWidth: 1,
       },
     ],
-  };
+  }
+
+  const populateGraph = (graphData) => {
+    console.log(graphData)
+    data.datasets[0].data = graphData
+  }
 
   React.useEffect(() => {
-    getItems(getLocalStorage('userId')).then((items) => {
+    getItems(getLocalStorage()).then((items) => {
       dataChart(
         items.data.filter((item) => {
           if (item.type === 'task') return item;
@@ -72,31 +79,48 @@ export const ChartDialog = (props) => {
   }, []);
 
   const dataChart = (items) => {
+    console.log(items)
+    let v_started = 0
+    let v_finished = 0
+    let v_canceled = 0
+    let v_important = 0
+    let v_notStarted = 0
+    let v_total = 0
+
+
     items.forEach((item) => {
       if (item.started) {
-        started += 1;
+        setStarted(started => started + 1)
+        v_started += 1;
       } else if (item.finished) {
-        finished += 1;
+        setFinished(finished => finished + 1)
+        v_finished += 1;
       } else if (item.canceled) {
-        canceled += 1;
+        setCanceled(canceled => canceled + 1)
+        v_canceled += 1;
       } else if (item.important) {
-        important += 1;
+        setImportant(important => important + 1)
+        v_important += 1;
       } else if (
         !item.important &&
         !item.finished &&
         !item.started &&
         !item.canceled
       ) {
-        notStarted += 1;
+        setNotStarted(notStarted => notStarted + 1)
+        v_notStarted += 1;
       }
-      total += 1;
+      setTotal(total => total + 1)
+      v_total += 1;
     });
 
-    dataTasks = [notStarted, started, important, finished, canceled];
-
-    return dataTasks;
+    // dataTasks = [notStarted, started, important, finished, canceled];
+    setDataTasks([notStarted, started, important, finished, canceled])
+    populateGraph([v_notStarted, v_started, v_important, v_finished, v_canceled])
+    setShowGraph(true)
   };
-
+  
+  console.log([notStarted, started, important, finished, canceled])
   const handleClose = () => {
     onClose();
   };
@@ -111,7 +135,7 @@ export const ChartDialog = (props) => {
     >
       <DialogTitle id="alert-dialog-title">Statistics</DialogTitle>
       <DialogContent>
-        <Pie options={chartOptions} data={data} />
+       { showGraph && <Pie options={chartOptions} data={data} /> }
         <h4>Total: {total}</h4>
       </DialogContent>
     </Dialog>

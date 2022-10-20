@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getLocalStorage } from '../helpers/LocalStorage';
+import { getLocalStorage, setLocalStorage } from '../helpers/LocalStorage';
 import { toast } from 'react-toastify';
 import { toastConfig } from '../helpers/ToastConfig';
 
@@ -84,7 +84,7 @@ export const resetPassword = (data) => {
     });
 };
 
-export const user = () => {
+export const getUser = () => {
   return api
     .get(`user/${getLocalStorage('userId')}`)
     .then((response) => response)
@@ -97,7 +97,16 @@ export const updateUser = (user) => {
   return api
     .put(`updateUser/${getLocalStorage('userId')}`, user)
     .then((response) => {
+      
+      let auth = getLocalStorage('auth');
+      auth.user.name = response.data.name;
+
+      setTimeout(() => {
+        setLocalStorage('auth', auth);
+      }, 100);
+
       toast.success('Your account details have been updated!', toastConfig);
+
       return response;
     })
     .catch((err) => {

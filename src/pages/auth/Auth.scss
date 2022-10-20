@@ -50,8 +50,12 @@ form {
       width: max-content;
     }
 
+    p {
+      display: flex;
+      justify-content: center;
+    }
+
     span {
-      text-align: center;
       cursor: pointer;
     }
   }
