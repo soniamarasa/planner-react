@@ -6,8 +6,15 @@ import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import LiveTvIcon from '@mui/icons-material/LiveTv';
 import SubdirectoryArrowRightIcon from '@mui/icons-material/SubdirectoryArrowRight';
+import { ItemActions } from '../ItemActions/ItemActions';
 
 export const Item = ({ item }) => {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
   const status = (item) => {
     let style = '';
 
@@ -21,7 +28,7 @@ export const Item = ({ item }) => {
 
   return (
     <>
-      <li className={status(item)} key={item._id}>
+      <li onClick={handleClick} className={'item-list' + ' ' + status(item)} key={item._id}>
         <span>
           {' '}
           {item.type === 'appointment' && item.finished && <EventIcon />}
@@ -40,6 +47,7 @@ export const Item = ({ item }) => {
           </small>
         )}
       </li>
+      <ItemActions anchorEl={anchorEl} setAnchorEl={setAnchorEl} item={item} />
     </>
   );
 };

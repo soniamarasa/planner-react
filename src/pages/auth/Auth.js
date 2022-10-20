@@ -62,6 +62,7 @@ export const Auth = () => {
         setTimeout(() => {
           navigate('/');
         }, 1000);
+        
       }
     }
   };

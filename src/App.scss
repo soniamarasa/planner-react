@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Handlee&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Itim&display=swap');
+@import 'react-toastify/dist/ReactToastify.css';
 
 $font-color: #483806;
 $primary-color: #eebd1e;
@@ -53,10 +54,9 @@ a {
   }
 }
 
-// code {
-//   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-//     monospace;
-// }
+.item-list {
+  cursor: pointer;
+}
 
 li {
   list-style-type: none;
@@ -98,9 +98,12 @@ ul {
   max-width: 1000px;
 }
 
-
 .container-sm {
   max-width: 800px;
+}
+
+.container-home {
+  padding: 0rem 2rem 2rem;
 }
 
 .container-planner {
@@ -121,7 +124,7 @@ ul {
   height: calc(100% - 2rem);
 }
 
-.canlendar {
+.calendar {
   height: min-content;
 }
 
@@ -147,14 +150,18 @@ ul {
   color: $tertiary-color;
 }
 
-Button {
+Button:not(.Toastify__close-button, .Toastify__close-button--light) {
   background-color: $primary-color !important;
   font-family: 'Itim', cursive !important;
   text-transform: capitalize !important;
   color: $font-color !important;
 
-  &:hover {
+  &:hover(.Toastify__close-button, .Toastify__close-button--light) {
     background-color: $secundary-color !important;
+  }
+
+  &:disabled {
+    opacity: 0.5;
   }
 }
 
@@ -172,8 +179,17 @@ button .button-home {
   padding: 6px !important;
   background-color: transparent !important;
 
-  &:hover {
+  &:hover:not(.add-item .MuiIconButton-root ) {
     background-color: rgba(0, 0, 0, 0.05) !important;
+  }
+}
+
+.add-item {
+  .MuiIconButton-root {
+  
+    &:hover:not(.add-item .MuiIconButton-root ) {
+      background-color: $secundary-color !important;
+    }
   }
 }
 
@@ -252,7 +268,7 @@ button .button-home {
 
   .MuiOutlinedInput-root {
     & fieldset {
-      border-color: rgba(255, 255, 255, 0.00) !important;
+      border-color: rgba(255, 255, 255, 0) !important;
     }
   }
 }
@@ -266,6 +282,12 @@ form small {
   button:focus-visible {
     background-color: transparent !important;
     border: 2px solid $primary-color;
+  }
+
+  button:disabled,
+  button[disabled] {
+    background-color: #cccccc !important;
+    color: #666666 !important;
   }
 
   .MuiSpeedDial-actions {
@@ -522,16 +544,22 @@ form small {
   }
 }
 
-.user-img { 
+.user-img {
   background-color: $primary-color;
 
   svg {
-
-      width: inherit;
-      height: inherit;
-      padding: 1.5rem;
-      box-sizing: border-box;
-      color: #fff;
-
+    width: inherit;
+    height: inherit;
+    padding: 1.5rem;
+    box-sizing: border-box;
+    color: #fff;
   }
+}
+
+.MuiMenuItem-root {
+  flex-direction: row;
+}
+
+.form-edit {
+  min-width: 400px;
 }

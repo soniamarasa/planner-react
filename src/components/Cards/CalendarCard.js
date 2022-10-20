@@ -5,7 +5,7 @@ import Calendar from 'react-calendar';
 export const CalendarCard = () => {
   const [value, onChange] = useState(new Date());
   return (
-    <Card className="card canlendar">
+    <Card className="card calendar">
       <h3>Calendar</h3>
       <Calendar locale='en-US'  onChange={onChange} value={value} />
     </Card>

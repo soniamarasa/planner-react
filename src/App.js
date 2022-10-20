@@ -2,7 +2,7 @@ import * as React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import './App.scss';
 
-import { Toast } from './helpers/Toast';
+import { Toast } from './components/Toast';
 import { ThemeStorage } from './ThemeContext';
 import { ItemStorage } from './ItemContext';
 import { Container } from './components/Container/Container';
@@ -16,7 +16,7 @@ function App() {
             <Container />
           </ItemStorage>
         </ThemeStorage>
-        <Toast />
+        <Toast/>
       </BrowserRouter>
     </div>
   );

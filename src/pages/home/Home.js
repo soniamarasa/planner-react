@@ -1,29 +1,52 @@
-import React, { useEffect} from 'react';
+import React, { useEffect } from 'react';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import AddIcon from '@mui/icons-material/Add';
+import { IconButton } from '@mui/material';
 import { PlannerBody } from '../../components/PlannerBody/PlannerBody';
 import { CalendarCard } from '../../components/Cards/CalendarCard';
 import { Todo } from '../../components/Cards/Todo';
-import { getItems} from '../../services/api';
-import { getLocalStorage } from '../../helpers/LocalStorage';
-import 'react-calendar/dist/Calendar.css';
+import { getItems } from '../../services/api';
+import { NewItemDialog } from '../../components/Dialogs/NewItemDialog';
+
 import { ItemContext } from '../../ItemContext';
+import 'react-calendar/dist/Calendar.css';
+import './Home.scss';
 
 export const Home = () => {
   const { items, setItems } = React.useContext(ItemContext);
+  const [openNewItemDialog, setNewItemDialog] = React.useState(false);
+
+  const handleClickOpenNewItemDialog = () => {
+    setNewItemDialog(true);
+  };
+
+  const handleCloseNewItemDialog = () => {
+    setNewItemDialog(false);
+  };
+
   useEffect(() => {
-    getItems(getLocalStorage('userId')).then((items) => {
+    getItems().then((items) => {
       setItems(
         items.data.sort((a, b) => {
           if (a.type && b.type)
             return a.type < b.type ? -1 : a.type > b.type ? 1 : 0;
+            else return null
         })
       );
     });
-  }, []);
+  }, [setItems]);
 
   return (
-    <Box className="container">
+    <Box className="container container-home">
+      <div className="add-item">
+        {' '}
+        <IconButton onClick={handleClickOpenNewItemDialog}>
+          {' '}
+          <AddIcon />{' '}
+        </IconButton>{' '}
+      </div>
+
       <Grid container spacing={2} columnSpacing={2} className="grid">
         <Grid
           item
@@ -51,6 +74,10 @@ export const Home = () => {
           <Todo items={items} />
         </Grid>
       </Grid>
+      <NewItemDialog
+        open={openNewItemDialog}
+        onClose={handleCloseNewItemDialog}
+      />
     </Box>
   );
 };

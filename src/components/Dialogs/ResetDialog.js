@@ -5,20 +5,20 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { resetPlanner, userId } from '../../services/api';
+import { resetPlanner } from '../../services/api';
 import { ItemContext } from '../../ItemContext';
 import { ThemeContext } from '../../ThemeContext';
 
 export const ResetDialog = ({ onClose, open }) => {
   const { setItems } = React.useContext(ItemContext);
-  const { theme} = React.useContext(ThemeContext);
+  const { theme } = React.useContext(ThemeContext);
 
   const handleClose = () => {
     onClose();
   };
 
   const reset = () => {
-    resetPlanner(userId).then(() => {
+    resetPlanner().then(() => {
       setItems([]);
       handleClose();
     });
