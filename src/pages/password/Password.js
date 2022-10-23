@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Box } from '@mui/material';
 import { Grid } from '@mui/material';
 import Card from '@mui/material/Card';
@@ -17,8 +17,9 @@ import Error from '../../helpers/Error';
 import useForm from '../../hooks/UseForm';
 import { resetPassword } from '../../services/api';
 
-export const Password = () => {
+export const Password = (props) => {
   const navigate = useNavigate();
+  const { token } = useParams();
   const password = useForm('password');
   const confirmPassword = useForm();
 
@@ -51,12 +52,9 @@ export const Password = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const data = {
-      password: password.value,
-    };
-
     if (password.validate()) {
-      const response = await resetPassword(data);
+    
+      const response = await resetPassword(password.value, token);
 
       if (response.status === 200) {
         setTimeout(() => {

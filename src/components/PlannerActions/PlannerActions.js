@@ -14,6 +14,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 
 import { logout } from '../../services/api';
 import { removeLocalStorage } from '../../helpers/LocalStorage';
+import { ItemContext } from '../../ItemContext';
 
 import { ThemeDialog } from '../Dialogs/ThemeDialog';
 import { ResetDialog } from '../Dialogs/ResetDialog';
@@ -21,6 +22,7 @@ import { ChartDialog } from '../Dialogs/ChartDialog';
 
 export default function PlannerActions() {
   const navigate = useNavigate();
+  const { setItems } = React.useContext(ItemContext);
   const [openTheme, setOpenTheme] = React.useState(false);
   const [openReset, setOpenReset] = React.useState(false);
   const [openChart, setOpenChart] = React.useState(false);
@@ -81,6 +83,7 @@ export default function PlannerActions() {
         logout().then(() => {
           removeLocalStorage('auth');
           removeLocalStorage('userId');
+          setItems([]);
           navigate('/auth');
         });
         break;
@@ -88,7 +91,7 @@ export default function PlannerActions() {
   }
 
   return (
-    <Box  sx={{ transform: 'translateZ(0px)', flexGrow: 1 }}>
+    <Box sx={{ transform: 'translateZ(0px)', flexGrow: 1 }}>
       <SpeedDial
         ariaLabel="SpeedDial"
         sx={{ position: 'absolute', top: 10, left: 10 }}
@@ -110,7 +113,9 @@ export default function PlannerActions() {
       </SpeedDial>
       <ThemeDialog open={openTheme} onClose={handleCloseThemeDialog} />
       <ResetDialog open={openReset} onClose={handleCloseResetDialog} />
-   { openChart &&  <ChartDialog open={openChart} onClose={handleCloseChartDialog} />}
+      {openChart && (
+        <ChartDialog open={openChart} onClose={handleCloseChartDialog} />
+      )}
     </Box>
   );
 }

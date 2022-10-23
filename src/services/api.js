@@ -75,9 +75,17 @@ export const retrievePassword = (data) => {
     });
 };
 
-export const resetPassword = (data) => {
+export const resetPassword = (password, token) => {
   return api
-    .post('resetPassword', data)
+    .post(
+      'resetPassword',
+      { password },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    )
     .then((response) => response)
     .catch((err) => {
       toast.error(err.response.data.error, toastConfig);
@@ -97,7 +105,6 @@ export const updateUser = (user) => {
   return api
     .put(`updateUser/${getLocalStorage('userId')}`, user)
     .then((response) => {
-      
       let auth = getLocalStorage('auth');
       auth.user.name = response.data.name;
 

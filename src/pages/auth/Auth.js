@@ -22,6 +22,7 @@ import useForm from '../../hooks/UseForm';
 import { RecoverPassDialog } from '../../components/Dialogs/RecoverPassDialog';
 
 export const Auth = () => {
+
   const navigate = useNavigate();
   const email = useForm('email');
   const password = useForm();
@@ -50,7 +51,7 @@ export const Auth = () => {
         password: password.value,
       });
 
-      if (response.status === 200) {
+      if (response?.status === 200) {
         let auth = {
           isAuthenticated: true,
           user: response.data.user,
@@ -60,6 +61,7 @@ export const Auth = () => {
         setLocalStorage('userId', auth.user.id);
 
         setTimeout(() => {
+          
           navigate('/');
         }, 1000);
         

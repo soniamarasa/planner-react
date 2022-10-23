@@ -59,7 +59,7 @@ export const NewItemDialog = (props) => {
       const response = await newItem(item);
       if (response.status === 200) {
         const newArray = [...items];
-        newArray.push(response.data[0]);
+        newArray.push(...response.data);
         setItems(newArray);
         handleClose();
       }
