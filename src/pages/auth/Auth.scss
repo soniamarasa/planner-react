@@ -45,6 +45,7 @@ form {
     flex-direction: column;
     gap: 1.5rem;
     padding: 1.5rem;
+    min-height: 32rem;
 
     Button {
       width: max-content;
@@ -86,3 +87,18 @@ form {
   }
 }
 
+@media (max-width: 899.9px) {
+  .img-container {
+    margin: -1rem 0 0;
+    img {
+      display: none;
+    }
+    h2 {
+      position: static;
+      margin-bottom: 1rem;
+    }
+    p {
+      text-align: center;
+    }
+  }
+}

@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Handlee&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Itim&display=swap');
-@import 'react-toastify/dist/ReactToastify.css';
+
 
 $font-color: #483806;
 $primary-color: #eebd1e;
@@ -578,4 +578,10 @@ form small {
 
 .form-edit {
   min-width: 400px;
+}
+
+
+.css-futumu-MuiLinearProgress-root {
+  margin: 1rem 0;
+  border-radius: 1rem;
 }

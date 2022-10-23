@@ -2,6 +2,8 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import ProtectedRoute from '../../helpers/ProtectedRoute';
+import RedirectRoute from '../../helpers/RedirectRoute';
+import { useLocation } from 'react-router-dom';
 
 import { Header } from '../Header/Header';
 import { Footer } from '../Footer/Footer';
@@ -16,14 +18,41 @@ import { ThemeContext } from '../../ThemeContext';
 
 export const Container = () => {
   const { theme } = React.useContext(ThemeContext);
+  const location = useLocation();
+  const rotes = ['/', '/account'];
+
   return (
-    <main className={theme}>
-      <div className='container-root'>
+    <main className={rotes.includes(location.pathname) ? theme : 'theme-01'}>
+      <div className="container-root">
         <Header />
         <Routes>
-          <Route path="/auth" element={<Auth />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/password-reset/:token" element={<Password />} />
+          <Route
+            path="/auth"
+            element={
+              <RedirectRoute>
+                {' '}
+                <Auth />
+              </RedirectRoute>
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              <RedirectRoute>
+                {' '}
+                <SignUp />{' '}
+              </RedirectRoute>
+            }
+          />
+          <Route
+            path="/password-reset/:token"
+            element={
+              <RedirectRoute>
+                {' '}
+                <Password />
+              </RedirectRoute>
+            }
+          />
           <Route path="*" element={<NotFound />} />
           <Route
             path="/"
