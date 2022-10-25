@@ -14,26 +14,26 @@ export const PlannerBody = ({ items }) => {
     
     <Grid container spacing={2}>
       <Grid item xs={12} sm={6} md={4} lg={3} xl={3}>
-        <Day day="Segunda" items={itemsBox('mon')}></Day>
+        <Day day="Monday" items={itemsBox('mon')}></Day>
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={3} xl={3}>
-        <Day day="Terça" items={itemsBox('tue')}></Day>
+        <Day day="Tuesday" items={itemsBox('tue')}></Day>
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={3} xl={3}>
-        <Day day="Quarta" items={itemsBox('wed')}></Day>
+        <Day day="Wednesday" items={itemsBox('wed')}></Day>
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={3} xl={3}>
-        <Day day="Quinta" items={itemsBox('thu')}></Day>
+        <Day day="Thursday" items={itemsBox('thu')}></Day>
       </Grid>
      
        <Grid item xs={12} sm={6} md={4} lg={3} xl={3}>
-        <Day day="Sexta" items={itemsBox('fri')}></Day>
+        <Day day="Friday" items={itemsBox('fri')}></Day>
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={3} xl={3}>
-        <Day day="Sabado" items={itemsBox('sat')}></Day>
+        <Day day="Saturday" items={itemsBox('sat')}></Day>
       </Grid>
       <Grid item xs={12} sm={6} md={6} lg={3} xl={3}>
-        <Day day="Domingo" items={itemsBox('sun')}></Day>
+        <Day day="Sunday" items={itemsBox('sun')}></Day>
       </Grid>
       <Grid item xs={12} sm={6} md={6} lg={3} xl={3}>
         <Notes items={itemsBox('notes')}></Notes>

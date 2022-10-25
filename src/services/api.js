@@ -1,14 +1,7 @@
 import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
-
 import { getLocalStorage, setLocalStorage } from '../helpers/LocalStorage';
-
-export const getToken = () => {
-  let token = '';
-  if (getLocalStorage('auth')) token = getLocalStorage('auth').user.token;
-  return token;
-};
 
 export const api = axios.create();
 

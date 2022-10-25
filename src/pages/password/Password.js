@@ -8,10 +8,8 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import IconButton from '@mui/material/IconButton';
-import { Button } from '@mui/material';
-
 import InputAdornment from '@mui/material/InputAdornment';
-
+import { Button } from '@mui/material';
 import './Password.scss';
 import Error from '../../helpers/Error';
 import useForm from '../../hooks/UseForm';

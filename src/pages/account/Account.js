@@ -18,12 +18,10 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import dayjs from 'dayjs';
-
 import Error from '../../helpers/Error';
 import useForm from '../../hooks/UseForm';
 import { getUser, updateUser } from '../../services/api';
 import { UserImg } from '../../components/UserImg/UserImg';
-
 import './Account.scss';
 
 export const Account = () => {
@@ -35,7 +33,7 @@ export const Account = () => {
   const confirmPassword = useForm();
 
   const [birthdate, setBirthdate] = React.useState(dayjs('').format());
-  const [showoldPassword, setoldPassword] = React.useState(false);
+  const [showOldPassword, setOldPassword] = React.useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
 
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
@@ -49,8 +47,8 @@ export const Account = () => {
     setBirthdate(dateValue);
   };
 
-  const handleClickShowoldPassword = () => {
-    setoldPassword(!showoldPassword);
+  const handleClickShowOldPassword = () => {
+    setOldPassword(!showOldPassword);
   };
 
   const handleClickShowPassword = () => {
@@ -111,10 +109,7 @@ export const Account = () => {
     };
 
     if (email.validate()) {
-      const response = await updateUser(data);
-
-      if (response.status === 200) {
-      }
+      await updateUser(data);
     }
   };
 
@@ -132,10 +127,7 @@ export const Account = () => {
     };
 
     if (oldPassword.validate() && password.validate()) {
-      const response = await updateUser(data);
-
-      if (response.status === 200) {
-      }
+      await updateUser(data);
     }
   };
 
@@ -153,12 +145,12 @@ export const Account = () => {
       <h1>Account</h1>
       <Box>
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={2} md={3} lg={2} xl={2}>
+          <Grid className="grid-img" item xs={12} sm={2} md={2} lg={2} xl={2}>
             <div className="user-img">
               <UserImg gender={gender.value} />
             </div>
           </Grid>
-          <Grid item xs={12} sm={10} md={9} lg={10} xl={10}>
+          <Grid item xs={12} sm={10} md={10} lg={10} xl={10}>
             <Card className="card">
               <form onSubmit={handleSubmit}>
                 <Grid container spacing={2}>
@@ -262,14 +254,14 @@ export const Account = () => {
                       <OutlinedInput
                         required
                         size="small"
-                        type={showoldPassword ? 'text' : 'password'}
+                        type={showOldPassword ? 'text' : 'password'}
                         endAdornment={
                           <InputAdornment position="end">
                             <IconButton
-                              onClick={handleClickShowoldPassword}
+                              onClick={handleClickShowOldPassword}
                               edge="end"
                             >
-                              {showoldPassword ? (
+                              {showOldPassword ? (
                                 <VisibilityOff />
                               ) : (
                                 <Visibility />

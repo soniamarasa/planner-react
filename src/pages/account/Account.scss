@@ -28,3 +28,14 @@
     margin-top: 2rem;
   }
 }
+
+@media (max-width: 599.9px) {
+  .grid-img {
+    display: flex;
+    justify-content: center;
+  }
+  .user-img {
+    width: 120px !important;
+    height: 120px !important;
+  }
+}

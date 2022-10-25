@@ -39,16 +39,16 @@ export const ChartDialog = (props) => {
         backgroundColor: [
           '#eebd1e',
           '#b995b9',
+          '#f52d55',
           '#4AB915',
           '#5C5C5E',
-          '#f52d55',
         ],
         hoverBackgroundColor: [
           '#FFB324',
           '#CDB4CD',
+          '#F8708B',
           '#72E938',
           '#979799',
-          '#F8708B',
         ],
         borderWidth: 1,
       },
@@ -78,7 +78,7 @@ export const ChartDialog = (props) => {
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">Statistics</DialogTitle>
+      <DialogTitle id="alert-dialog-title">Statistics (only tasks)</DialogTitle>
       <DialogContent>
         {showGraph && <Pie options={chartOptions} data={data} />}
         <h4>Total: {graph.total}</h4>

@@ -22,7 +22,6 @@ import useForm from '../../hooks/UseForm';
 import { RecoverPassDialog } from '../../components/Dialogs/RecoverPassDialog';
 
 export const Auth = () => {
-
   const navigate = useNavigate();
   const email = useForm('email');
   const password = useForm();
@@ -30,7 +29,7 @@ export const Auth = () => {
   const [showPassword, setShowPassword] = React.useState(false);
   const [openRecoverPass, setOpenRecoverPass] = React.useState(false);
 
-  const handleClickOpenRecoverDialog = () => {
+  const handleOpenRecoverDialog = () => {
     setOpenRecoverPass(true);
   };
 
@@ -61,10 +60,8 @@ export const Auth = () => {
         setLocalStorage('userId', auth.user.id);
 
         setTimeout(() => {
-          
           navigate('/');
         }, 1000);
-        
       }
     }
   };
@@ -159,14 +156,21 @@ export const Auth = () => {
                 </Button>
               </form>
 
-              <p >
-               <span onClick={() => handleClickOpenRecoverDialog()}> Forgot password?  </span> 
+              <p>
+                <span onClick={() => handleOpenRecoverDialog()}>
+                  {' '}
+                  Forgot password?{' '}
+                </span>
               </p>
             </div>
 
             <div className="card-footer">
               <p>Don't have an account?</p>
-              <Button onClick={() => navigate('/signup')} size="small" variant="contained">
+              <Button
+                onClick={() => navigate('/signup')}
+                size="small"
+                variant="contained"
+              >
                 Sign up
               </Button>
             </div>
