@@ -1,7 +1,12 @@
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
-import { getLocalStorage, setLocalStorage } from '../helpers/LocalStorage';
+import {
+  getLocalStorage,
+  setLocalStorage,
+  removeLocalStorage,
+} from '../helpers/LocalStorage';
 
 export const api = axios.create();
 
@@ -26,6 +31,22 @@ api.interceptors.request.use(
     Promise.reject(error);
   }
 );
+
+api.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+ function (error) {
+    if (error.response.status === 401) {
+      removeLocalStorage('auth');
+      removeLocalStorage('userId');
+      useNavigate('/auth')
+      return 
+    }
+    return Promise.reject(error);
+  }
+);
+
 //USER
 export const createAccount = (user) => {
   return api

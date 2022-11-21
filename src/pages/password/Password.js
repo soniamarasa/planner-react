@@ -51,7 +51,6 @@ export const Password = (props) => {
     e.preventDefault();
 
     if (password.validate()) {
-    
       const response = await resetPassword(password.value, token);
 
       if (response.status === 200) {
